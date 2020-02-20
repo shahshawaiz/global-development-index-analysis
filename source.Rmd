@@ -8,7 +8,7 @@ toc: true
 toc_depth: 2
 ---
 
-```{r echo=FALSE, message=FALSE, results=FALSE, warning=FALSE, warning=FALSE}
+```{r echo=FALSE, message=FALSE, results=FALSE, warning=FALSE}
 # install packages, if not installed
 list.of.packages <- c(
   "reshape2", 
