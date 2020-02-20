@@ -1,8 +1,11 @@
 ---
 title: "Data Analysis - Global Development Index"
 output:
-  html_document:
-    code_folding: "hide"
+  md_document:
+    variant: markdown_github
+always_allow_html: yes    
+toc: true
+toc_depth: 2
 ---
 
 ```{r echo=FALSE, message=FALSE, results=FALSE, warning=FALSE, warning=FALSE}
@@ -95,7 +98,7 @@ Following are code snippets of internal pre-processing;
 
 * Regions were added to all countries
 
-```{r fig.align="center", out.width = '100%'}
+```{r echo=FALSE, message=FALSE, results=FALSE, fig.align="center", out.width = '100%'}
 
 #load new data
 #dat.new.raw <- read.csv("wdi-e.csv")
@@ -135,7 +138,7 @@ dat.raw.d <- labelRegions(dat.raw.d)
 
 * Indicator were reanmed to shorter names for easier referencing
 
-```{r fig.align="center", out.width = '100%'}
+```{r echo=FALSE, message=FALSE, results=FALSE, fig.align="center", out.width = '100%'}
 
 renameIndicators <- function(dat){
   
@@ -198,7 +201,7 @@ dat.d <- renameIndicators(dat.raw.d)
 
 * Dataset was aggregated over different dimensions
 
-```{r fig.align="center", out.width = '100%'}
+```{r echo=FALSE, message=FALSE, results=FALSE, fig.align="center", out.width = '100%'}
 
 # group by routine
 groupByCol <- function(dat, col, filter = ""){
@@ -236,7 +239,7 @@ datRegionalAvg.w <- groupByCol(dat.d, c('region', 'indicator'))
 
 * Dataset was normalize for some operations using min-max normalization
 
-```{r fig.align="center", out.width = '100%'}
+```{r echo=FALSE, message=FALSE, results=FALSE, fig.align="center", out.width = '100%'}
 
 # normalize routine
 normalize <- function(col) {
@@ -249,7 +252,7 @@ normalize <- function(col) {
 * The orignal structure of dataset was transformed using data transformation techniques to make processing more convenient
 * Data was trasnformed from long to wide format
 
-```{r fig.align="center", out.width = '100%'}
+```{r echo=FALSE, message=FALSE, results=FALSE, fig.align="center", out.width = '100%'}
 
 # Write CSV in R
 #write.csv(dat.all, file = "Final_Data.csv")
@@ -287,7 +290,7 @@ datRegionalAvg <- dcast(datRegionalAvg.w, region ~ indicator, value.var="value")
 
 * Missing value were treated by filling it with mean of respective column
 
-```{r fig.align="center", out.width = '100%'}
+```{r echo=FALSE, message=FALSE, results=FALSE, fig.align="center", out.width = '100%'}
 
 fillMissing <- function(df){
   for(i in 1:ncol(df)){
@@ -364,7 +367,7 @@ getEniviornmenFriendly <- function(df){
 
 ### Economic trends for regions and countries since 1960
 
-```{r fig.align="center", out.width = '100%'}
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.align="center", out.width = '100%'}
 
 p <- ggplot(datRegionalYearlyAvg, aes(year, gdp_capita, color = region)) + 
   geom_line() + 
@@ -390,7 +393,7 @@ animate(p, nframes = 300, fps=10)
 * Disparity started increasing after 1990
 
 
-```{r fig.align="center", out.width = '100%'}
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.align="center", out.width = '100%'}
 
 p <- ggplot(datNationalYearlyAvg, aes(year, gdp_capita, color = country)) + 
   geom_line() + 
@@ -416,7 +419,7 @@ animate(p, nframes = 300, fps=10)
 
 ### Effect of Social prosperity and enviornmental prosperity over economy, before and after 2000
 
-```{r fig.align="center", out.width = '100%'}
+```{r echo=FALSE, message=FALSE, results=FALSE, fig.align="center", out.width = '100%'}
 
 getCorrelation <- function(df){
 # slice important cols
@@ -480,7 +483,7 @@ par(mfrow=c(1,2))
 + At first, we will show the world 58 years ago in 1960, over the countries of Africa, Asia, Middle East, America and Europe.
 + The size of the point area shows the population density.
 
-```{r fig.align="center", out.width = '100%', message=FALSE, warning=FALSE}
+```{r echo=FALSE, message=FALSE, results=FALSE, fig.align="center", out.width = '100%', message=FALSE, warning=FALSE}
 
   economic_indicators <- c(
     "gdp_capita", # GDP per capita (current US$)
@@ -533,7 +536,7 @@ ggplotly(gg)
 
 ### Regional population growth trends since 1960
 
-```{r fig.align="center", out.width = '100%'}
+```{r echo=FALSE, message=FALSE, results=FALSE, fig.align="center", out.width = '100%'}
 
 # normalize
 datRegionalYearlyAvg$population_growth <- normalize(datRegionalYearlyAvg$population_growth)
@@ -565,7 +568,7 @@ legend("topright",
 
 ### Good seprators (indicators) for rich and poor countries
 
-```{r fig.align="center", out.width = '100%', message=FALSE, warning=FALSE}
+```{r echo=FALSE, message=FALSE, results=FALSE, fig.align="center", out.width = '100%', message=FALSE, warning=FALSE}
 
 
 #Data has been merged before and saved it as a new csv for the sake of simplicity
@@ -613,7 +616,7 @@ llong$year <-as.numeric(as.character(llong[,1]))
 ```
 
 
-```{r fig.align="center", out.width = '100%', message=FALSE, warning=FALSE}
+```{r echo=FALSE, message=FALSE, results=FALSE, fig.align="center", out.width = '100%', message=FALSE, warning=FALSE}
 
 plot_circular_bar<-function(llong,var1,var2){
   
@@ -763,7 +766,7 @@ plot_circular_bar<-function(llong,var1,var2){
 
 **a. High Income countries**
 
-```{r fig.align="center", out.width = '100%', message=FALSE, warning=FALSE}
+```{r echo=FALSE, message=FALSE, results=FALSE, fig.align="center", out.width = '100%', message=FALSE, warning=FALSE}
 
 plot_circular_bar(llong,"Social","High income")
 
@@ -777,7 +780,7 @@ plot_circular_bar(llong,"Social","High income")
 
 **b. Middle Income countries**
 
-```{r fig.align="center", out.width = '100%', message=FALSE, warning=FALSE}
+```{r echo=FALSE, message=FALSE, results=FALSE, fig.align="center", out.width = '100%', message=FALSE, warning=FALSE}
 
 plot_circular_bar(llong,"Social","Middle income")
 
@@ -794,7 +797,7 @@ Pupil-teacher ratio, Birthrate are the indicators which are separating Middle fr
 
 **c. Low Income countries:**
 
-```{r fig.align="center", out.width = '100%', message=FALSE, warning=FALSE}
+```{r echo=FALSE, message=FALSE, results=FALSE, fig.align="center", out.width = '100%', message=FALSE, warning=FALSE}
 
 plot_circular_bar(llong,"Social","Low income")
 
@@ -813,7 +816,7 @@ Pupil-teacher ratio, primary, Government expenditure on education and population
 
 **a. High Income countries**
 
-```{r fig.align="center", out.width = '100%', message=FALSE, warning=FALSE}
+```{r echo=FALSE, message=FALSE, results=FALSE, fig.align="center", out.width = '100%', message=FALSE, warning=FALSE}
 
 plot_circular_bar(llong,"Environmental","High income")
 
@@ -828,7 +831,7 @@ plot_circular_bar(llong,"Environmental","High income")
 
 **b. Middle Income countries**
 
-```{r fig.align="center", out.width = '100%', message=FALSE, warning=FALSE}
+```{r echo=FALSE, message=FALSE, results=FALSE, fig.align="center", out.width = '100%', message=FALSE, warning=FALSE}
 
 plot_circular_bar(llong,"Environmental","Middle income")
 
@@ -845,7 +848,7 @@ CO2 emissions, Forest area and Greenhouse emission  are in some sense good disti
 
 **c. Low Income countries**
 
-```{r fig.align="center", out.width = '100%', message=FALSE, warning=FALSE}
+```{r echo=FALSE, message=FALSE, results=FALSE, fig.align="center", out.width = '100%', message=FALSE, warning=FALSE}
 
 plot_circular_bar(llong,"Environmental","Low income")
 
@@ -865,7 +868,7 @@ High and Low income countries make a larger contribution to environmental pollut
 
 **a. High Income countries**
 
-```{r fig.align="center", out.width = '100%', message=FALSE, warning=FALSE}
+```{r echo=FALSE, message=FALSE, results=FALSE, fig.align="center", out.width = '100%', message=FALSE, warning=FALSE}
 
 plot_circular_bar(llong,"Economical","High income")
 
@@ -915,7 +918,8 @@ The “Circular barplot with groups” were used to visualise the difference bet
 
 ### Effect of social prosperity on economic prosperity
 
-```{r}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
 ggplot(datRegionalDecadeAvg, aes(decade, social_prosperity, fill = social_prosperity)) +
   geom_col() +
   scale_fill_distiller(palette = "Reds", direction = 1) +
